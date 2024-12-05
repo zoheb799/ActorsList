@@ -4,8 +4,14 @@ import Actor from '../model';
 
 dbConnect();
 
-export async function GET(req: NextRequest, { params }: { params: { actorId: string } }) {
-  const { actorId } = params;
+interface RouteParams {
+  params: {
+    actorId: string;
+  };
+}
+
+export async function GET(req: NextRequest, context: RouteParams) {
+  const { actorId } = context.params;
 
   try {
     const actor = await Actor.findById(actorId);
