@@ -114,8 +114,8 @@ const HomePage = () => {
         selectedActor && (
           <div className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden mt-6 mx-auto">
             <Image
-              height={100}
-              width={100}
+            height={100}
+            width={100}
               src={selectedActor.pictureUrl}
               alt={selectedActor.name}
               className="w-32 h-32 object-cover rounded-full mx-auto mt-4 bg-slate-200"
@@ -123,11 +123,14 @@ const HomePage = () => {
             <div className="p-4">
               <div className="text-xl font-semibold text-gray-900 justify-center  flex flex-col items-center gap-3">
                 <h3> Name : {selectedActor.name}</h3>
-                <p className="text-gray-700 mt-1">Age: {selectedActor.age}</p>
+              <p className="text-gray-700 mt-1">Age: {selectedActor.age}</p>
+
               </div>
               <p className="text-gray-600 mt-2 text-sm">{selectedActor.bio}</p>
             </div>
           </div>
+
+          
         )
       )}
     </div>
