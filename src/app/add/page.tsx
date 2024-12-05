@@ -1,17 +1,18 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import Image from "next/image";
 
 const AddActor = () => {
-  const [name, setName] = useState('');
-  const [pictureUrl, setPictureUrl] = useState('');
+  const [name, setName] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
   const [age, setAge] = useState(0);
-  const [bio, setBio] = useState('');
+  const [bio, setBio] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);  // For previewing the image
+  const [imagePreview, setImagePreview] = useState<string | null>(null); // For previewing the image
   const router = useRouter();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,21 +40,24 @@ const AddActor = () => {
       bio,
     };
 
-    console.log('Submitting actor data:', actorData);
+    console.log("Submitting actor data:", actorData);
 
     try {
-      const response = await axios.post('/api/actors', actorData);
+      const response = await axios.post("/api/actors", actorData);
 
-      console.log('Response Data:', response.data);
+      console.log("Response Data:", response.data);
 
       if (response.status === 201) {
-        router.push('/'); 
+        router.push("/");
       } else {
-        setError('Failed to add actor');
+        setError("Failed to add actor");
       }
     } catch (error: any) {
-      console.error('Error in Axios POST:', error);
-      setError(error.response?.data?.message || 'An error occurred while adding the actor.');
+      console.error("Error in Axios POST:", error);
+      setError(
+        error.response?.data?.message ||
+          "An error occurred while adding the actor."
+      );
     } finally {
       setLoading(false);
     }
@@ -72,7 +76,7 @@ const AddActor = () => {
             type="text"
             id="name"
             name="name"
-            placeholder='name'
+            placeholder="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full p-2 border border-gray-300 text-gray-700  rounded-md"
@@ -95,7 +99,9 @@ const AddActor = () => {
           />
           {imagePreview && (
             <div className="mt-2">
-              <img
+              <Image
+                height={100}
+                width={100}
                 src={imagePreview}
                 alt="Selected image preview"
                 className="w-32 h-32 object-cover border rounded-md"
@@ -126,7 +132,7 @@ const AddActor = () => {
           <textarea
             id="bio"
             name="bio"
-            placeholder='bio'
+            placeholder="bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             className="w-full p-2 border border-gray-300 text-gray-700  rounded-md"
@@ -140,7 +146,7 @@ const AddActor = () => {
           disabled={loading}
           className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400"
         >
-          {loading ? 'Adding Actor...' : 'Add Actor'}
+          {loading ? "Adding Actor..." : "Add Actor"}
         </button>
       </form>
     </div>
