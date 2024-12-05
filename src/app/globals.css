@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;  /* Default background */
+  --foreground: #171717;  /* Default foreground (text) color */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #14a2f5;  /* Dark mode background */
+    --foreground: #ededed;  /* Dark mode foreground (text) color */
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: linear-gradient(to right, #0093E9, #3aabecd3);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* background-color: #0093E9;
+background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%); */
