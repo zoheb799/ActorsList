@@ -32,37 +32,43 @@ const AddActor = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
+  
     const actorData = {
       name,
       pictureUrl,
       age,
       bio,
     };
-
+  
     console.log("Submitting actor data:", actorData);
-
+  
     try {
       const response = await axios.post("/api/actors", actorData);
-
+  
       console.log("Response Data:", response.data);
-
+  
       if (response.status === 201) {
         router.push("/");
       } else {
         setError("Failed to add actor");
       }
-    } catch (error: any) {
+    } catch (error: unknown) { // Use 'unknown' instead of 'any'
       console.error("Error in Axios POST:", error);
-      setError(
-        error.response?.data?.message ||
+  
+      // Type guard to handle AxiosError type
+      if (axios.isAxiosError(error)) {
+        setError(
+          error.response?.data?.message ||
           "An error occurred while adding the actor."
-      );
+        );
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="max-w-xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Add New Actor</h1>

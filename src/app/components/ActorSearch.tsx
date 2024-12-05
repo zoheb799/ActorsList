@@ -2,17 +2,22 @@
 
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { FaSearch } from 'react-icons/fa'; 
+import { FaSearch } from 'react-icons/fa';
+
+type Actor = {
+  _id: string;
+  name: string;
+};
 
 const ActorSearch = ({ onSelectActor }: { onSelectActor: (actorId: string) => void }) => {
   const [query, setQuery] = useState('');
-  const [suggestions, setSuggestions] = useState<any[]>([]);
-  const searchRef = useRef<HTMLDivElement>(null); 
-  const [isFocused, setIsFocused] = useState(false); 
+  const [suggestions, setSuggestions] = useState<Actor[]>([]); // Use Actor type
+  const searchRef = useRef<HTMLDivElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   const fetchDefaultSuggestions = async () => {
     try {
-      const response = await axios.get(`/api/actors`); 
+      const response = await axios.get<Actor[]>('/api/actors'); // Use Actor[] for response data
       setSuggestions(response.data);
     } catch (error) {
       console.error('Error fetching default actor suggestions', error);
@@ -25,20 +30,20 @@ const ActorSearch = ({ onSelectActor }: { onSelectActor: (actorId: string) => vo
 
     if (value.trim()) {
       try {
-        const response = await axios.get(`/api/actors?name=${value}`);
+        const response = await axios.get<Actor[]>(`/api/actors?name=${value}`); // Use Actor[] for response data
         setSuggestions(response.data);
       } catch (error) {
         console.error('Error fetching actor suggestions', error);
       }
     } else {
-      fetchDefaultSuggestions(); 
+      fetchDefaultSuggestions();
     }
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setSuggestions([]); 
+        setSuggestions([]);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -50,7 +55,7 @@ const ActorSearch = ({ onSelectActor }: { onSelectActor: (actorId: string) => vo
   return (
     <div className="relative max-w-lg mx-auto" ref={searchRef}>
       <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 bg-white shadow-sm focus-within:border-blue-500">
-        <FaSearch className="text-gray-500 mr-2" /> 
+        <FaSearch className="text-gray-500 mr-2" />
         <input
           type="text"
           value={query}
@@ -58,8 +63,8 @@ const ActorSearch = ({ onSelectActor }: { onSelectActor: (actorId: string) => vo
             setIsFocused(true);
             fetchDefaultSuggestions();
           }}
-          onBlur={() => setIsFocused(false)} 
-          onChange={handleSearch}         
+          onBlur={() => setIsFocused(false)}
+          onChange={handleSearch}
           placeholder="Search for an actor..."
           className="w-full p-2 text-gray-700 focus:outline-none bg-transparent"
         />
