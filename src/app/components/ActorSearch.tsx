@@ -49,18 +49,17 @@ const ActorSearch = ({ onSelectActor }: { onSelectActor: (actorId: string) => vo
 
   return (
     <div className="relative max-w-lg mx-auto" ref={searchRef}>
-      {/* Search input with icon */}
       <div className="flex items-center border border-gray-300 rounded-lg px-4 py-2 bg-white shadow-sm focus-within:border-blue-500">
-        <FaSearch className="text-gray-500 mr-2" /> {/* Search icon */}
+        <FaSearch className="text-gray-500 mr-2" /> 
         <input
           type="text"
           value={query}
           onFocus={() => {
             setIsFocused(true);
-            fetchDefaultSuggestions(); // Trigger default suggestions on focus
+            fetchDefaultSuggestions();
           }}
-          onBlur={() => setIsFocused(false)} // When the input loses focus
-          onChange={handleSearch}          // Trigger filtered suggestions on input
+          onBlur={() => setIsFocused(false)} 
+          onChange={handleSearch}         
           placeholder="Search for an actor..."
           className="w-full p-2 text-gray-700 focus:outline-none bg-transparent"
         />

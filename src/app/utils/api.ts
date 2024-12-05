@@ -1,10 +1,13 @@
+import { Response } from 'express';
+interface CustomError extends Error {
+  message: string;
+}
 
-export const handleError = (res: any, error: any) => {
-    console.error(error);
-    res.status(500).json({ message: 'Server Error', error: error.message });
-  };
-  
-  export const handleSuccess = (res: any, data: any) => {
-    res.status(200).json(data);
-  };
-  
+export const handleError = (res: Response, error: CustomError) => {
+  console.error(error);
+  res.status(500).json({ message: 'Server Error', error: error.message });
+};
+
+export const handleSuccess = (res: Response, data: any) => {
+  res.status(200).json(data);
+};

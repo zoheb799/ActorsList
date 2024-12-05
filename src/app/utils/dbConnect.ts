@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const dbConnect = async () => {
+  // Check if MongoDB is already connected
   if (mongoose.connections[0].readyState) {
     return;
   }
@@ -11,7 +12,7 @@ const dbConnect = async () => {
   }
 
   try {
-    const connection = await mongoose.connect(mongodbUri, {
+    await mongoose.connect(mongodbUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
