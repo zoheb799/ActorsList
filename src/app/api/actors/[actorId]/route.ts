@@ -6,7 +6,7 @@ dbConnect();
 
 export async function GET(
   req: NextRequest,
-  context: { params: Record<string, string> }
+  context: { params: { actorId: string } }
 ) {
   const { actorId } = context.params;
 
