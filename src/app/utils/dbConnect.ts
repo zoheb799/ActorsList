@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const dbConnect = async () => {
   // Check if MongoDB is already connected
   if (mongoose.connections[0].readyState) {
+    console.log('MongoDB is already connected');
     return;
   }
 
@@ -12,14 +13,13 @@ const dbConnect = async () => {
   }
 
   try {
-    await mongoose.connect(mongodbUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    // Connect to MongoDB without the deprecated options
+    await mongoose.connect(mongodbUri);
     console.log('MongoDB connected');
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
-    process.exit(1);
+    // Instead of exiting the process, we can log the error and throw it if needed
+    throw new Error('MongoDB connection failed');
   }
 };
 
