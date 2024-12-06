@@ -4,7 +4,10 @@ import Actor from '../model';
 
 dbConnect();
 
-export async function GET(req: NextRequest, context: { params: { actorId: string } }) {
+export async function GET(
+  req: NextRequest,
+  context: { params: Record<string, string> }
+) {
   const { actorId } = context.params;
 
   try {
